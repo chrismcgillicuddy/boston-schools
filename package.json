@@ -1,11 +1,20 @@
 {
-  "name": "mass-map",
+  "name": "boston-schools",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://www.dpqb.net/schools",
   "dependencies": {
+    "d3": "^5.7.0",
+    "d3-scale": "^2.1.2",
+    "flubber": "^0.4.2",
+    "lodash": "^4.17.11",
+    "node-sass": "^4.9.4",
+    "rc-slider": "^8.6.3",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.1.0"
+    "react-scripts": "2.1.0",
+    "textures": "^1.2.0",
+    "topojson": "^3.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
