@@ -72,6 +72,7 @@ class TownsMap extends Component {
         updateTownDetails(town);
         showTownDetails();
         el.classed(activeTownClass, true);
+        // svg.appendChild(el);
       }
     }
 

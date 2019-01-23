@@ -75,7 +75,11 @@ class App extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <div className="loading">Building map...</div>
+        <div className="loader">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       )
     } else {
       let priceRange = this.state.priceRange;
