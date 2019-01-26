@@ -4,17 +4,19 @@ import * as d3 from 'd3';
 import * as TopoJSON from 'topojson';
 import TownsMap from './TownsMap';
 import StatesMap from './StatesMap';
-import TownDetails from './TownDetails';
+// import TownDetails from './TownDetails';
 import Header from './Header';
 import SchoolRankLegend from './SchoolRankLegend';
 import PriceFilter from './PriceFilter';
+import RankPriceChart from './RankPriceChart';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      matchingTownCount: 148,
+      rankedTownCount: 148,
+      highlightedTown: "BOSTON", // default town to highlight
       massTowns: {},
       newEnglandStates: {},
       priceRange: [200000,2000000]
@@ -52,6 +54,7 @@ class App extends Component {
 
     // handle ESC
     document.addEventListener("keydown", this.closeAppDetails, false);
+
   }
   componentWillUnmount(){
     document.removeEventListener("keydown", this.closeAppDetails, false);
@@ -59,7 +62,7 @@ class App extends Component {
 
   closeAppDetails = (event) => {
     if(event.keyCode === 27) {
-      console.log("ESC");
+      // console.log("ESC");
       d3.select(".header").classed("show-details", false);
     }
   }
@@ -68,8 +71,13 @@ class App extends Component {
     this.setState({priceRange: newRange});
   }
 
-  handleMatchingTownCount = (newCount) => {
-    this.setState({matchingTownCount: newCount});
+  handleRankedTownCount = (newCount) => {
+    this.setState({rankedTownCount: newCount});
+  }
+
+  handleHighlightedTown = (town) => {
+    console.log("handleHighlightedTown", town);
+    this.setState({highlightedTown: town});
   }
 
   render() {
@@ -78,19 +86,37 @@ class App extends Component {
         <div className="loading">Building map...</div>
       )
     } else {
+      let highlightedTown = this.state.highlightedTown;
       let priceRange = this.state.priceRange;
-      let matchingTownCount = this.state.matchingTownCount;
+      let rankedTownCount = this.state.rankedTownCount;
       let massTowns = this.state.massTowns;
       let newEnglandStates = this.state.newEnglandStates;
 
       return (
         <div className='app-container'>
-          <StatesMap data={newEnglandStates} />
-          <TownsMap matchingTownCount={matchingTownCount} updateTownCount={this.handleMatchingTownCount} priceRange={priceRange} data={massTowns} />
-          <TownDetails />
-          <Header />
+          <StatesMap
+            data={newEnglandStates}
+          />
+          <TownsMap
+            highlightedTown={highlightedTown}
+            handleHighlightedTown={this.handleHighlightedTown}
+            matchingTownCount={rankedTownCount}
+            updateTownCount={this.handleRankedTownCount}
+            priceRange={priceRange}
+            data={massTowns}
+          />
+          {/*<TownDetails />*/}
+          <RankPriceChart
+            highlightedTown={highlightedTown}
+            handleHighlightedTown={this.handleHighlightedTown}
+            priceRange={priceRange}
+            data={massTowns}
+          />
           <SchoolRankLegend />
-          <PriceFilter priceRange={priceRange} updateRange={this.handlePriceRange} />
+          <PriceFilter
+            priceRange={priceRange}
+            updateRange={this.handlePriceRange}
+          />
         </div>
       )
     }

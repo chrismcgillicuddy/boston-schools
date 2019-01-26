@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700');
 // @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Serif');
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Serif:300,400,500,600');
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:100,200,300,400,500,600');
 
 // common values
 $animationRate: 0.07s;
@@ -128,11 +129,12 @@ path:hover {
 }
 .ranked-town.active {
   opacity: 1;
+  // stroke: rgba(white, 0.8);
+  // stroke-width: 3px;
+  fill: #fff;
   transition: all $animationRate ease;
-  fill: $highlightColor !important;
 }
 .town-details {
-  // : 300;
   z-index: 100;
   position: absolute;
   left: 700px;
@@ -445,6 +447,7 @@ path:hover {
   font-size: 12px;
 }
 .rc-slider-mark-text {
+  font-family: "IBM Plex Mono", monospace;
   position: absolute;
   display: inline-block;
   vertical-align: middle;
@@ -967,6 +970,45 @@ path:hover {
   }
   .price-range-from,
   .price-range-to {
+    font-family: "IBM Plex Mono", monospace;
     font-weight: 600;
+  }
+}
+
+$grey: #6B7678;
+// Rank vs Value scatter plot
+.rank-price-chart {
+
+  // background: gold;
+  // border-top: 1px solid $grey;
+  // border-bottom: 1px solid $grey;
+  position: absolute;
+  top: 80px;
+  left: 50vw;
+  circle {
+    fill: none;
+    stroke-width: 1px;
+    stroke: $grey;
+    &.highlight {
+      fill: #ffffff;
+      stroke: #ffffff;
+      transition: all 0.3s ease;
+    }
+  }
+}
+.y-axis {
+  path,
+  .tick,
+  line {
+    stroke: $grey;
+    fill: none;
+  }
+  text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 100;
+    font-size: 11px;
+    margin-left: 1px;
+    text-rendering: optimizeLegibility;
+    shape-rendering: crispEdges;
   }
 }
