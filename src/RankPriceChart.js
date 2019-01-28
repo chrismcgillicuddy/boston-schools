@@ -1,10 +1,8 @@
-// https://swizec.com/blog/declarative-d3-charts-react-16-3/swizec/8353
-
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 
 const settings = {
-  width: 500,
+  width: 570,
   height: 300,
   padding: 30,
   numDataPoints: 148
@@ -33,7 +31,7 @@ class ScatterPlot extends React.Component {
     const xMin = d3.min(this.props.data.map(function(d){return parseInt(d.properties["median_price_2017"]);}));
     const xMax = d3.max(this.props.data.map(function(d){return parseInt(d.properties["median_price_2017"]);}));
 
-    return d3.scaleLinear()
+    return d3.scaleLog()
       .domain([xMin, xMax])
       .range([this.props.padding, (this.props.width - (this.props.padding * 2))]);
   }
@@ -57,35 +55,22 @@ class ScatterPlot extends React.Component {
     return (
       <svg className="rank-price-chart" width={this.props.width} height={this.props.height}>
         <DataCircles xScale={xScale} yScale={yScale} {...this.props} />
+        <text x="0" y="35" className="y-axis">HIGHER RANK</text>
+        <text x="0" y="275" className="y-axis">LOWER RANK</text>
       </svg>
     );
   }
 }
 
 class RankPriceChart extends Component {
-  // componentWillMount() {
-  //   this.setState({
-  //     data: this.props.data
-  //   });
-  // }
-  // componentDidMount() {
-  //   this.draw();
-  // }
-  // componentWillUpdate() {
-  //   this.draw();
-  // }
-
   render() {
     const {
       highlightedTown,
-      priceRange,
       data} = this.props;
 
     const rankedTowns = data.filter(function(d){
         return (Number(d.properties["rank-2018"]) > 0);
       }, this);
-
-    // console.log("data",data);
 
     return (
       <ScatterPlot data={rankedTowns} {...settings} />
@@ -93,4 +78,4 @@ class RankPriceChart extends Component {
   }
 }
 
- export default RankPriceChart;
+export default RankPriceChart;

@@ -5,9 +5,9 @@ import * as TopoJSON from 'topojson';
 import TownsMap from './TownsMap';
 import StatesMap from './StatesMap';
 // import TownDetails from './TownDetails';
+import TownStats from './TownStats';
 import Header from './Header';
 import SchoolRankLegend from './SchoolRankLegend';
-import PriceFilter from './PriceFilter';
 import RankPriceChart from './RankPriceChart';
 
 class App extends Component {
@@ -18,8 +18,7 @@ class App extends Component {
       rankedTownCount: 148,
       highlightedTown: "BOSTON", // default town to highlight
       massTowns: {},
-      newEnglandStates: {},
-      priceRange: [200000,2000000]
+      newEnglandStates: {}
     }
   }
 
@@ -67,10 +66,6 @@ class App extends Component {
     }
   }
 
-  handlePriceRange = (newRange) => {
-    this.setState({priceRange: newRange});
-  }
-
   handleRankedTownCount = (newCount) => {
     this.setState({rankedTownCount: newCount});
   }
@@ -87,7 +82,6 @@ class App extends Component {
       )
     } else {
       let highlightedTown = this.state.highlightedTown;
-      let priceRange = this.state.priceRange;
       let rankedTownCount = this.state.rankedTownCount;
       let massTowns = this.state.massTowns;
       let newEnglandStates = this.state.newEnglandStates;
@@ -102,21 +96,17 @@ class App extends Component {
             handleHighlightedTown={this.handleHighlightedTown}
             matchingTownCount={rankedTownCount}
             updateTownCount={this.handleRankedTownCount}
-            priceRange={priceRange}
             data={massTowns}
           />
-          {/*<TownDetails />*/}
+          <h1>GREATER BOSTON <span className="heading-bold">SCHOOL RANK</span> vs <span className="heading-bold">HOME VALUE</span><span className="info">+</span></h1>
+          <TownStats />
           <RankPriceChart
             highlightedTown={highlightedTown}
             handleHighlightedTown={this.handleHighlightedTown}
-            priceRange={priceRange}
             data={massTowns}
           />
           <SchoolRankLegend />
-          <PriceFilter
-            priceRange={priceRange}
-            updateRange={this.handlePriceRange}
-          />
+
         </div>
       )
     }

@@ -4,7 +4,8 @@ import { scaleQuantize } from 'd3-scale';
 import Textures from 'textures';
 
 // setup
-const formatPrice = d3.format("$,"); // for dollar
+const formatPrice = d3.format("$.2s");
+
 // let isInitialRender = true; // used to place default town highlight
 const activeTownClass = "active"; // "active"
 const schoolRankColumn = "rank-2018";
@@ -31,7 +32,6 @@ class TownsMap extends Component {
       highlightedTown,
       handleHighlightedTown,
       rankedTownCount,
-      priceRange,
       data} = this.props;
     // map setup
     const projection = d3.geoAlbersUsa().scale(31500).translate([-9800, 3740]);
@@ -135,7 +135,7 @@ class TownsMap extends Component {
           let rank = Number(d.properties[schoolRankColumn]);
           d3.select(this).classed("town", true);
 
-          if(rank > 0 && (d.properties[medianHomeValueColumn] >= priceRange[0]) && (d.properties[medianHomeValueColumn] <= priceRange[1])) {
+          if(rank > 0 && (d.properties[medianHomeValueColumn])) {
             // TODO: move this to a class
             // d3.select(this).style("stroke","#76a47f").style("stroke-width","0.25");
             d3.select(this).classed("ranked-town", true);
