@@ -4,7 +4,6 @@ import * as d3 from 'd3';
 import * as TopoJSON from 'topojson';
 import TownsMap from './TownsMap';
 import StatesMap from './StatesMap';
-// import TownDetails from './TownDetails';
 import TownStats from './TownStats';
 import Header from './Header';
 import SchoolRankLegend from './SchoolRankLegend';
@@ -61,7 +60,6 @@ class App extends Component {
 
   closeAppDetails = (event) => {
     if(event.keyCode === 27) {
-      // console.log("ESC");
       d3.select(".header").classed("show-details", false);
     }
   }
@@ -71,7 +69,6 @@ class App extends Component {
   }
 
   handleHighlightedTown = (town) => {
-    console.log("handleHighlightedTown", town);
     this.setState({highlightedTown: town});
   }
 
@@ -85,10 +82,10 @@ class App extends Component {
         </div>
       )
     } else {
-      let highlightedTown = this.state.highlightedTown;
-      let rankedTownCount = this.state.rankedTownCount;
-      let massTowns = this.state.massTowns;
-      let newEnglandStates = this.state.newEnglandStates;
+      const highlightedTown = this.state.highlightedTown,
+            rankedTownCount = this.state.rankedTownCount,
+            massTowns = this.state.massTowns,
+            newEnglandStates = this.state.newEnglandStates;
 
       return (
         <div className='app-container'>
@@ -102,7 +99,7 @@ class App extends Component {
             updateTownCount={this.handleRankedTownCount}
             data={massTowns}
           />
-          <h1>GREATER BOSTON <span className="heading-bold">SCHOOL RANK</span> vs <span className="heading-bold">HOME VALUE</span><span className="info">+</span></h1>
+          <h1>GREATER BOSTON <span className="heading-bold">SCHOOL RANK</span> vs <span className="heading-bold">HOME VALUE</span> <span className="info"></span></h1>
           <TownStats />
           <RankPriceChart
             highlightedTown={highlightedTown}

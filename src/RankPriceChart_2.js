@@ -63,18 +63,6 @@ class ScatterPlot extends React.Component {
 }
 
 class RankPriceChart extends Component {
-  // componentWillMount() {
-  //   this.setState({
-  //     data: this.props.data
-  //   });
-  // }
-  // componentDidMount() {
-  //   this.draw();
-  // }
-  // componentWillUpdate() {
-  //   this.draw();
-  // }
-
   render() {
     const {
       highlightedTown,
@@ -84,8 +72,6 @@ class RankPriceChart extends Component {
     const rankedTowns = data.filter(function(d){
         return (Number(d.properties["rank-2018"]) > 0);
       }, this);
-
-    // console.log("data",data);
 
     return (
       <ScatterPlot data={rankedTowns} {...settings} />
