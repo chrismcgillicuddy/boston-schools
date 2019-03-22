@@ -5,9 +5,9 @@ import * as TopoJSON from 'topojson';
 import TownsMap from './TownsMap';
 import StatesMap from './StatesMap';
 import TownStats from './TownStats';
-import Header from './Header';
 import SchoolRankLegend from './SchoolRankLegend';
 import RankPriceChart from './RankPriceChart';
+import Sources from './Sources';
 
 class App extends Component {
   constructor(props) {
@@ -99,15 +99,17 @@ class App extends Component {
             updateTownCount={this.handleRankedTownCount}
             data={massTowns}
           />
-          <h1>GREATER BOSTON <span className="heading-bold">SCHOOL RANK</span> vs <span className="heading-bold">HOME VALUE</span> <span className="info"></span></h1>
-          <TownStats />
-          <RankPriceChart
-            highlightedTown={highlightedTown}
-            handleHighlightedTown={this.handleHighlightedTown}
-            data={massTowns}
-          />
+          <div className="header-with-chart">
+            <h1>GREATER BOSTON <span className="heading-bold">SCHOOL RANK</span> vs <span className="heading-bold">HOME VALUE</span></h1>
+            <TownStats />
+            <RankPriceChart
+              highlightedTown={highlightedTown}
+              handleHighlightedTown={this.handleHighlightedTown}
+              data={massTowns}
+            />
+          </div>
           <SchoolRankLegend />
-
+          <Sources />
         </div>
       )
     }

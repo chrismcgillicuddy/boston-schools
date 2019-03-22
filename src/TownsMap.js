@@ -6,13 +6,11 @@ import Textures from 'textures';
 // setup
 const formatPrice = d3.format("$.2s");
 
-// let isInitialRender = true; // used to place default town highlight
 const activeTownClass = "active"; // "active"
 const schoolRankColumn = "rank-2018";
 const schoolNameColumn = "school";
 const medianHomeValueColumn = "median_price_2017";
 const townNameColumn = "TOWN";
-// let rankedTownCount = 148;
 
 // used for converting town names from ALL CAPS
 const makeTitleCase = function(str) {
@@ -68,7 +66,7 @@ class TownsMap extends Component {
     }
 
     // highlight town on map, either color or texture
-    const addTownHoverStyle = function(town, el) {
+    const townSelectedStyle = function(town, el) {
 
       // console.log("addTownHoverStyle ", town);
       let rank = Number(town.properties[schoolRankColumn]);
@@ -78,12 +76,29 @@ class TownsMap extends Component {
         updateTownDetails(town);
         showTownDetails();
         el.classed(activeTownClass, true);
-
-        // update SVG <use> to render stroke above neighboring paths
-        // svg.select("use")
-        //   .attr("xlink:href", "#"+el._groups[0][0].id);
       }
     }
+
+    // TOOLTIP
+    const townNameLabel = d3.select("body")
+      .append("div")
+      .attr("class", "tooltip map-tooltip")
+      .style("opacity", 0);
+
+    const showTooltip = function(e, townName) {
+      townNameLabel.transition()
+        .duration(100)
+        .style("opacity", 1);
+      townNameLabel.html(makeTitleCase(townName))
+        .style("left", (e.screenX+10)+"px")
+        .style("top", (e.screenY-90)+"px");
+    };
+
+    const hideTooltip = function() {
+      townNameLabel.transition()
+        .duration(500)
+        .style("opacity", 0);
+    };
 
     const updateTownDetails = function(town) {
       let rank = Number(town.properties[schoolRankColumn]);
@@ -113,18 +128,12 @@ class TownsMap extends Component {
       }
     }
 
-    // count number of matching items
-    // rankedTowns = data.filter(function(d){
-    //               return ((Number(d.properties[schoolRankColumn]) > 0) && (d.properties[medianHomeValueColumn] >= priceRange[0]) && (d.properties[medianHomeValueColumn] <= priceRange[1]));
-    //             }, this).length;
-
     svg.append("g")
       .attr("id", "towns")
       .selectAll("path")
       .data(data)
       .enter().append("path")
         .filter(function(d) {
-          // console.log("compare home value,",Number(d.properties[medianHomeValueColumn]));
           return d;})
         .attr("id", function(d, i){
           return i;
@@ -181,17 +190,26 @@ class TownsMap extends Component {
         })
         .on("click", function(d){
           d3.selectAll("."+activeTownClass).classed(activeTownClass, false); // remove
-          addTownHoverStyle(d, d3.select(this));
+          townSelectedStyle(d, d3.select(this));
         })
         .on("touchstart", function(d){
           d3.selectAll("."+activeTownClass).classed(activeTownClass, false); // remove
-          addTownHoverStyle(d, d3.select(this));
+          townSelectedStyle(d, d3.select(this));
         })
         .on("mouseover", function(d) {
-          // TODO: apply hover class
+          let town = Number(d.properties[townNameColumn]);
+          let rank = Number(d.properties[schoolRankColumn]);
+          showTooltip(d3.event,d.properties[townNameColumn]);
+          if (isNaN(rank)) {
+            d3.select(this).style("fill", "#939EA0");
+          }
         })
         .on("mouseout", function(d) {
-          // TODO: remove hover class
+          let rank = Number(d.properties[schoolRankColumn]);
+          hideTooltip();
+          if (isNaN(rank)) {
+            d3.select(this).style("fill", "#6B7678");
+          }
         });
 
     // use, for town highlighting, add default ID (Boston)

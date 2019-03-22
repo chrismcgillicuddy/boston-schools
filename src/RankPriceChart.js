@@ -1,12 +1,11 @@
-// reference: https://codepen.io/greg5green/pen/epLKMp
+// chart reference: https://codepen.io/greg5green/pen/epLKMp
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 
 const settings = {
   margin: {top: 10, right: 15, bottom: 40, left: 10},
   width: 625,
-  height: 275,
-  numDataPoints: 148
+  height: 275
 };
 
 // used for converting town names from ALL CAPS
@@ -15,12 +14,12 @@ const makeTitleCase = function(str) {
   return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
-const townNameLabel = d3.select("body").append("div")
-  .attr("class", "chart-tooltip")
+const townNameLabel = d3.select("body")
+  .append("div")
+  .attr("class", "tooltip chart-tooltip")
   .style("opacity", 0);
 
 const showTooltip = function(e, townName) {
-  // console.log("HOVER, Show Tooltip", e);
   townNameLabel.transition()
     .duration(100)
     .style("opacity", 1);
@@ -30,9 +29,8 @@ const showTooltip = function(e, townName) {
 };
 
 const hideTooltip = function() {
-  // console.log("MOUSE OUT, Hide Tooltip");
   townNameLabel.transition()
-    .duration(500)
+    .duration(100)
     .style("opacity", 0);
 };
 
@@ -64,6 +62,7 @@ class CrossLines extends React.Component {
     const lines = this.props.data.map(function(d){
       const townName = d.properties["TOWN"];
       const highlightedTown = this.props.highlightedTown;
+      const circleOffset = 5;
 
       if(townName === highlightedTown){
         const xCoord = this.props.xScale(d.properties["median_price_2017"]);
@@ -72,10 +71,10 @@ class CrossLines extends React.Component {
         return (
           <g>
             <line
-              x1={xCoord+5}
-              x2={xCoord+5}
+              x1={xCoord+circleOffset}
+              x2={xCoord+circleOffset}
               y1="0"
-              y2={this.props.height+this.props.margin.top+5}
+              y2={this.props.height+this.props.margin.top+circleOffset}
               className="cross-line"
             />
             <line
@@ -157,7 +156,7 @@ class ScatterPlot extends React.Component {
           tooltip={tooltip}
           {...this.props} />
         <XAxis scale={xScale} translate={`translate(0, ${this.props.height + 20})`} {...this.props} />
-        <text x="0" y="12" className="y-axis">HIGHER RANK</text>
+        <text x="0" y="12" className="y-axis">HIGHER RANK (BETTER)</text>
         <text x="0" y={this.props.height+this.props.margin.top+5} className="y-axis">LOWER RANK</text>
         <text x={this.props.width-60} y={this.props.height+this.props.margin.top+28} className="y-axis">HOME VALUE</text>
       </svg>
