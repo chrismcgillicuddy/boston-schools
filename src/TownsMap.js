@@ -39,13 +39,6 @@ class TownsMap extends Component {
     const rankToColor = function(value, max) {
       const warm = scaleQuantize()
         .domain([1,rankedTownCount])
-        // .range(['#fffac1','#fff2be','#ffe9ba','#ffe0b7','#ffd6b3','#ffcdaf','#ffc4ab','#ffbba8','#ffb1a3','#ffa89f','#ff9f9b','#ff9497','#ff8a92','#ff7f8d','#ff7288','#ff6683','#ff587e']);
-        // .range(['#fb8993','#f98c8b','#f78f85','#f6927f','#f4957b','#f39878','#f29b76','#f19e74','#f1a174','#f1a475','#f1a776','#f1aa78','#f1ad7b','#f2b07f','#f2b383','#f3b788','#f3ba8e','#f4be94','#f4c19a','#f5c5a1','#f5c9a8','#f5cdaf','#f6d1b7','#f6d5bf','#f6d9c7','#f5ddce','#f5e2d6','#f4e6de','#f2ebe6','#f1f0ee']);
-        // .range([
-        //         '#fb8993',
-        //         '#f1a776',
-        //         '#f5c9a8',
-        //         '#f1f0ee']);
       return warm(value);
     }
 
@@ -56,6 +49,7 @@ class TownsMap extends Component {
     // default texture
     const texture = Textures.lines().size(6).strokeWidth(1).stroke('#ddd');
     svg.call(texture);
+
     // highlight texture
     const highlightTexture = Textures.lines().size(6).background("#fbf897").strokeWidth(1).stroke('#333');
     svg.call(highlightTexture);
@@ -197,11 +191,11 @@ class TownsMap extends Component {
           townSelectedStyle(d, d3.select(this));
         })
         .on("mouseover", function(d) {
-          let town = Number(d.properties[townNameColumn]);
+          let town = d.properties[townNameColumn];
           let rank = Number(d.properties[schoolRankColumn]);
-          showTooltip(d3.event,d.properties[townNameColumn]);
+          showTooltip(d3.event, town);
           if (isNaN(rank)) {
-            d3.select(this).style("fill", "#939EA0");
+            d3.select(this).style("fill", "#A0A9AA");
           }
         })
         .on("mouseout", function(d) {

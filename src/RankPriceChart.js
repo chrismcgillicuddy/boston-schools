@@ -157,8 +157,8 @@ class ScatterPlot extends React.Component {
           {...this.props} />
         <XAxis scale={xScale} translate={`translate(0, ${this.props.height + 20})`} {...this.props} />
         <text x="0" y="12" className="y-axis">HIGHER RANK (BETTER)</text>
-        <text x="0" y={this.props.height+this.props.margin.top+5} className="y-axis">LOWER RANK</text>
-        <text x={this.props.width-60} y={this.props.height+this.props.margin.top+28} className="y-axis">HOME VALUE</text>
+        <text x="0" y={this.props.height+this.props.margin.top+5} className="y-axis">LOWER RANK (WORSE)</text>
+        <text x={this.props.width-60} y={this.props.height+this.props.margin.top+28} className="y-axis"><title>ABC</title>HOME VALUE</text>
       </svg>
     );
   }
