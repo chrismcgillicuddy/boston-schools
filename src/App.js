@@ -100,7 +100,7 @@ class App extends Component {
             data={massTowns}
           />
           <div className="header-with-chart">
-            <h1>GREATER BOSTON <span className="heading-bold">SCHOOL RANK</span> vs <span className="heading-bold">HOME VALUE</span></h1>
+            <h1>GREATER BOSTON <span className="heading-bold">HIGH SCHOOL RANK</span> vs <span className="heading-bold">HOME VALUE</span></h1>
             <TownStats />
             <RankPriceChart
               highlightedTown={highlightedTown}
