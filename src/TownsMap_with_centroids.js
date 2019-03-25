@@ -1,3 +1,7 @@
+/////////////////////////////////////////
+// Experimenting with flubber library
+// transforming towns' shapes to circles in a chart and back to a map
+
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 import { scaleLinear, scaleLog, scaleQuantize, scaleThreshold } from 'd3-scale';
