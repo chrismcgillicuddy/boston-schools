@@ -24,8 +24,8 @@ const showTooltip = function(e, townName) {
     .duration(100)
     .style("opacity", 1);
   townNameLabel.html(makeTitleCase(townName))
-    .style("left", (e.screenX-60)+"px")
-    .style("top", (e.screenY-90)+"px");
+    .style("left", (e.pageX-30)+"px")
+    .style("top", (e.pageY+20)+"px");
 };
 
 const hideTooltip = function() {
